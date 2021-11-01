@@ -1,0 +1,128 @@
+#include <iostream>
+using namespace std;
+
+class FooString
+{
+private:
+	int *arr;
+	int size;
+
+public:
+	FooString(int size1) {
+		arr = new int[size1];
+		size = size1;
+		for (int i = 0; i < size; i++) {
+			arr[i] = rand() % 100;
+			cout << arr[i] << '\t';
+		};
+	}
+
+	~FooString() {
+		delete[] arr;
+	}
+
+	int set(int i, int value) {
+		if (i < size) {
+			if (-100 <= value && value <= 100) {
+				arr[i] = value;
+			}
+			else {
+				cout << "Not included in the range [-100 ; 100]" << '\n';
+			}
+		}
+		else {
+			cout << "There is no such index in the array" << '\n';
+			int get();
+		}
+		return 0;
+	}
+
+	FooString(const FooString& copy)
+	{
+		size = copy.size;
+		arr = new int[copy.size];
+		for (int i = 0; i < size; i++) {
+			arr[i] = copy.arr[i];
+		};
+	}
+
+	int get(int i) {
+		if (i >= size) {
+			cout << "Enter the element number from the array range";
+		}
+		return arr[i];
+	}
+
+	int show() {
+		for (int i = 0; i < size; i++) {
+			cout << arr[i] << '\t';
+		};
+		return 0;
+	}
+
+	FooString operator+ (const FooString& copy){
+		FooString tmp(copy);
+		for (int i = 0; i < size; i++) {
+			tmp.arr[i] = tmp.get(i) + arr[i];
+		}
+		return tmp;
+	}
+
+	FooString operator- (const FooString& copy){
+		FooString tmp(copy);
+		for (int i = 0; i < size; i++) {
+			arr[i] = tmp.arr[i] - arr[i];
+			}
+		return tmp;
+	}
+};
+	
+
+
+
+	int main() {
+		int size, a, temp;
+		temp = 0;
+		cout << "Size of the first array ";
+		cin >> a;
+		size = a - 1;
+		FooString arr1(a);
+		cout << '\n';
+		while (a > size) {
+			cout << "The element number of this array ";
+			cin >> a;
+			arr1.get(a);
+		};
+		cout << "Its value ";
+		cin >> temp;
+		arr1.set(a, temp);
+		cout << "The first array" << '\n';
+		arr1.show();
+		cout << '\n' << '\n';
+		
+		
+		cout << "Size of the second array ";
+		cin >> a;
+		size = a - 1;
+		FooString arr2(a);
+		cout << '\n';
+		while (a > size) {
+			cout << "The element number of this array ";
+			cin >> a;
+			arr2.get(a);
+		};
+		cout << "Its value ";
+		cin >> temp;
+		arr2.set(a, temp);
+		cout << "The second array" << '\n';
+		arr2.show();
+
+		cout << '\n' << '\n';
+		cout << "Addition" << endl;
+		(arr1 + arr2).show();
+
+		cout << '\n' << '\n';;
+		cout << "Subtraction" << endl;
+		(arr1 - arr2).show();
+		return 0;
+	}
